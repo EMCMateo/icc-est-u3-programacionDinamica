@@ -33,7 +33,7 @@ public class App {
         private static void runMaze(){
             boolean[][] predefinedMaze = {
                 {true, true, true, true},
-                {false, true, true, true},
+                {false, true, false, true},
                 {true, true, false, false},
                 {true, true, true, true}
             };
@@ -47,16 +47,38 @@ public class App {
             Cell end = new Cell(3, 3);
             
             MazeSolverRecursive solver = new MazeSolverRecursive();
-            List<Cell> path = solver.getPath(maze.predefinedMaze, start, end);
-            java.util.Collections.reverse(path);
-            System.out.println("Camino: ");
-            System.out.println(path);
+            MazeResult result1 = solver.getPath(maze.predefinedMaze, start, end);
+            System.out.println("Visitados (recorrido):");
+            System.out.println(result1.getVisited());
+            if (result1.getVisited() != null)
+                maze.printMazeWithPath(new java.util.ArrayList<>(result1.getVisited()));
+            java.util.Collections.reverse(result1.getPath());
+            System.out.println("Camino óptimo:");
+            System.out.println(result1.getPath());
+            maze.printMazeWithPath(result1.getPath());
 
             MazeSolverRecursivoCuatro solver2 = new MazeSolverRecursivoCuatro();
-            List<Cell> path2 = solver2.getPath(maze.predefinedMaze, start, end);
-            java.util.Collections.reverse(path2);
-            System.out.println("Camino con 4 caminos posibles: ");
-            System.out.println(path2);
+            MazeResult result2 = solver2.getPath(maze.predefinedMaze, start, end);
+            System.out.println("Visitados (recorrido 4 dirs):");
+            System.out.println(result2.getVisited());
+            if (result2.getVisited() != null)
+                maze.printMazeWithPath(new java.util.ArrayList<>(result2.getVisited()));
+            java.util.Collections.reverse(result2.getPath());
+            System.out.println("Camino óptimo con 4 dirs:");
+            System.out.println(result2.getPath());
+            maze.printMazeWithPath(result2.getPath());
+
+            MazeSolverRecursivoCompletoBT solver3 = new MazeSolverRecursivoCompletoBT();
+            MazeResult result3 = solver3.getPath(maze.predefinedMaze, start, end);
+            System.out.println("Visitados (BT):");
+            System.out.println(result3.getVisited());
+            if (result3.getVisited() != null)
+                maze.printMazeWithPath(new java.util.ArrayList<>(result3.getVisited()));
+            java.util.Collections.reverse(result3.getPath());
+            System.out.println("Camino óptimo BT:");
+            System.out.println(result3.getPath());
+            maze.printMazeWithPath(result3.getPath());
+            
 
         }
 
